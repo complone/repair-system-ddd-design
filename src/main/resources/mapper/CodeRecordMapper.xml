@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lizhi.guide.mapper.CodeRecordMapper">
+    <resultMap id="BaseResultMap" type="com.lizhi.guide.entity.CodeRecord">
+        <constructor>
+            <idArg column="record_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="record_team_project_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="record_commit_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="record_commit_message" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="record_commit_version" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="record_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        record_id,record_team_project_id,record_commit_name,record_commit_message,record_commit_version,record_create_time
+    </sql>
+
+
+    <select id="selectCodeRecordByTeamProjectId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_project_record where
+        record_team_project_id=#{recordTeamProjectId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="createCodeRecordByCodeRecord" useGeneratedKeys="true" keyProperty="record_id">
+        insert into lz_project_record(record_id,record_team_project_id,record_commit_name,
+        record_commit_message,record_commit_version,record_create_time)
+        values(#{recordId,jdbcType=BIGINT},#{recordTeamProjectId,jdbcType=BIGINT},
+        #{recordCommitName,jdbcType=VARCHAR},#{recordCommitMessage,jdbcType=VARCHAR},#{recordCommitVersion,jdbcType=VARCHAR},
+        #{recordCreateTime,jdbcType=TIMESTAMP})
+
+    </insert>
+
+    <insert id="createCodeRecordListByCodeRecord" parameterType="java.util.List">
+        insert into lz_project_record(record_id,record_team_project_id,record_commit_name,
+        record_commit_message,record_commit_version,record_create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.recordId,jdbcType=BIGINT},#{item.recordTeamProjectId,jdbcType=BIGINT},
+        #{item.recordCommitName,jdbcType=VARCHAR},#{item.recordCommitMessage,jdbcType=VARCHAR},#{item.recordCommitVersion,jdbcType=VARCHAR},
+        #{item.recordCreateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+
+</mapper>

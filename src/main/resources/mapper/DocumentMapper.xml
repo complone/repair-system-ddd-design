@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lizhi.guide.mapper.DocumentMapper">
+    <resultMap id="BaseResultMap" type="com.lizhi.guide.entity.Document">
+        <constructor>
+            <idArg column="document_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="document_content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="document_view_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="document_team_project_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        document_id,document_content,document_view_id,document_team_project_id,create_time,update_time
+    </sql>
+    <insert id="createDocumentByTeamProjectAndDocumentViewId" useGeneratedKeys="true" keyProperty="document_id">
+        insert into lz_project_document(document_id,document_content,document_view_id,
+        document_team_project_id,create_time,update_time)
+        values(#{documentId,jdbcType=BIGINT},#{documentContent,jdbcType=VARCHAR},
+        #{documentViewId,jdbcType=INTEGER},#{documentTeamProjectId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="selectDocumentByTeamProjectIdAndDocumentViewId" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_project_document where
+        document_team_project_id=#{documentTeamProjectId,jdbcType=BIGINT}
+        and document_view_id=#{documentViewId,jdbcType=INTEGER}
+    </select>
+
+
+    <update id="updateDocumentByTeamProjectAndDocumentViewIdAndDocumentContent"
+            parameterType="com.lizhi.guide.entity.Document">
+
+
+        update lz_project_document
+        <set>
+            <if test="documentContent != null">
+                document_content = #{documentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="documentViewId != null">
+                document_view_id = #{documentViewId,jdbcType=INTEGER},
+            </if>
+            <if test="documentTeamProjectId != null">
+                document_team_project_id = #{documentTeamProjectId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+        </set>
+        where document_id = #{documentId,jdbcType=BIGINT}
+
+    </update>
+</mapper>

@@ -1,0 +1,17 @@
+#app,
+footer {
+    position: relative;
+    width: 900px;
+    margin: 100px auto;
+}
+
+#app {
+    min-height: 70%;
+}
+
+.btn-new {
+    position: absolute;
+    width: 100px;
+    left: -150px;
+    top: 0;
+}

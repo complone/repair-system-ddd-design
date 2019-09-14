@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lizhi.guide.mapper.BugCommitMapper">
+    <resultMap id="BaseResultMap" type="com.lizhi.guide.entity.BugCommit">
+        <constructor>
+            <idArg column="bug_commit_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="bug_commit_team_project_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="bug_commit_reason" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="bug_commit_info" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        bug_commit_id,bug_commit_team_project_id,bug_commit_reason,bug_commit_info,create_time,update_time
+    </sql>
+    <insert id="addBugCommitIdByBugCommit" useGeneratedKeys="true" keyProperty="bug_commit_id">
+        insert into lz_project_bug_commit(bug_commit_id,bug_commit_team_project_id,bug_commit_reason,
+        bug_commit_info,create_time,update_time)
+        values(#{bugCommitId,jdbcType=BIGINT},#{bugCommitTeamProjectId,jdbcType=BIGINT},
+        #{bugCommitReason,jdbcType=VARCHAR},#{bugCommitInfo,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="selectBugCommitByBugCommitTeamProjectId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_project_bug_commit where
+        bug_commit_team_project_id=#{bugCommitTeamProjectId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="seletTotalRowsByBugCommitByTeamProjectId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select count(1) from lz_project_bug_commit
+        where bug_commit_team_project_id=#{bugCommitTeamProjectId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBugCommitListByBugCommitTeamProjectId" parameterType="map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from lz_project_bug_commit
+        where bug_commit_team_project_id=#{bugCommitTeamProjectId,jdbcType=BIGINT}
+        limit #{pageNum},#{pageSize}
+    </select>
+
+
+    <update id="updateBugCommitIdByBugCommit"
+            parameterType="com.lizhi.guide.entity.BugCommit">
+
+
+        update lz_project_bug_commit
+        <set>
+            <if test="bugCommitId != null">
+                bug_commit_id = #{bugCommitId,jdbcType=BIGINT},
+            </if>
+            <if test="bugCommitReason!= null">
+                bug_commit_reason = #{bugCommitReason,jdbcType=VARCHAR},
+            </if>
+            <if test="bugCommitInfo!= null">
+                bug_commit_info = #{bugCommitInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = now(),
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+        </set>
+        where bug_commit_team_project_id = #{bugCommitTeamProjectId,jdbcType=BIGINT}
+
+    </update>
+</mapper>

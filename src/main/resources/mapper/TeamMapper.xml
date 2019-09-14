@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lizhi.guide.mapper.TeamMapper" >
+    <resultMap id="BaseResultMap" type="com.lizhi.guide.entity.Team" >
+        <constructor >
+            <idArg column="team_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        team_id,team_name,create_time,update_time
+    </sql>
+    <select id="selectTeamNameByTeamId" resultType="java.lang.String" parameterType="java.lang.Integer" >
+        select team_name
+        from lz_team_info
+        where team_id = #{teamId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectTeamByTeamId" resultType="com.lizhi.guide.entity.Team" parameterType="java.lang.Integer">
+        select
+            <include refid="Base_Column_List" />
+        from lz_team_info where team_id = #{teamId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

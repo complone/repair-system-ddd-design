@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lizhi.guide.mapper.EditorMapper">
+    <resultMap id="BaseResultMap" type="com.lizhi.guide.entity.Editor">
+        <constructor>
+            <idArg column="editor_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+            <arg column="editor_document_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+            <arg column="editor_document_markdown" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        editor_id,editor_document_id,editor_document_markdown,create_time,update_time
+    </sql>
+    <select id="selectEditorByEditorDocumentId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+          <include refid="Base_Column_List"/>
+        from lz_md_editor
+        where editor_document_id = #{editorDocumentId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="createEditorDocument" parameterType="com.lizhi.guide.entity.Editor" useGeneratedKeys="true" keyProperty="editor_id">
+        insert into lz_md_editor(editor_id,editor_document_id,editor_document_markdown,create_time,update_time)
+        values(#{editorId,jdbcType=BIGINT},#{editorDocumentId,jdbcType=BIGINT},
+        #{editorDocumentMarkdown,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <update id="updateEditorDocument" parameterType="com.lizhi.guide.entity.Editor">
+        update lz_md_editor
+        <set>
+            <if test="editorDocumentId != null">
+                editor_document_id = #{editorDocumentId,jdbcType=BIGINT},
+            </if>
+            <if test="editorDocumentMarkdown != null">
+                editor_document_markdown = #{editorDocumentMarkdown,jdbcType=VARCHAR},
+            </if>
+
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+        </set>
+        where editor_id = #{editorId,jdbcType=BIGINT}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,20 @@
+.list-style-none {
+    list-style: none!important;
+}
+
+.f6 {
+    font-size: 12px!important;
+}
+
+.d-inline-block {
+    display: inline-block!important;
+}
+.mr-2 {
+    margin-right: 8px!important;
+}
+.mt-1 {
+    margin-top: 4px!important;
+}
+.text-gray {
+    color: #586069!important;
+}

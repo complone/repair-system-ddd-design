@@ -1,0 +1,94 @@
+.r_foot {
+    width: 100%;
+    height: 40px;
+    background: #F4F4F4;
+    text-align: left;
+    position:absolute;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    /*left:0px;*/
+    /*bottom:0px;*/
+}
+
+.r_foot .r_foot_m{
+    width:100%;
+    height:40px;
+    line-height:40px;
+    position:relative;
+}
+.r_foot_m span{
+    display:inline-block;
+    *display:inline;
+    zoom:1;
+    vertical-align:middle;
+    margin-left:20px;
+    margin-right:20px;
+}
+.r_foot_m span em{
+    display:inline-block;
+    *display:inline;
+    zoom:1;
+    vertical-align:middle;
+}
+.r_foot_m .page{
+    height:30px;
+    position:absolute;
+    right:3px;
+    top:5px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    background:#FFF;
+    border:1px solid #DEDEDE;
+}
+.r_foot_m .page abbr{
+    display:inline-block;
+    *display:inline;
+    zoom:1;
+    width:42px;
+    height:30px;
+    text-align:center;
+    font-size:14px;
+    border-right:1px solid #DEDEDE;
+    line-height:30px;
+    vertical-align:top;
+    padding:0;
+    margin:0;
+}
+.r_foot_m .page abbr.now{
+    color:#FFF;
+    background:#3D89CB;
+}
+.r_foot_m .page .prev{
+    margin-left:6px;
+}
+.r_foot_m .page .next{
+    margin-right:6px;
+    border:0;
+}
+.r_foot_m abbr img{
+    width:9px;
+    height:14px;
+    vertical-align:top;
+    margin-top:9px;
+}
+
+.r_foot_m span input{
+    width:16px;
+    height:16px;
+    border:1px solid #DEDEDE;
+    background:none;
+    vertical-align:middle;
+}
+
+.footer{
+
+    width: 900px;
+    height: 100px;
+    position: absolute;
+    left: 50%;  /* 还要再向左挪回宽度的一半 */
+    margin-left: -50px;
+
+}
+
